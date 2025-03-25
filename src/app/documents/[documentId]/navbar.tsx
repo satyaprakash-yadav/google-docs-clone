@@ -2,22 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { BsFilePdf } from "react-icons/bs";
-
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-
-import { DocumentInput } from "./document-input";
 import {
   BoldIcon,
   FileIcon,
@@ -36,6 +20,24 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
+import { BsFilePdf } from "react-icons/bs";
+
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+
+import { DocumentInput } from "./document-input";
 
 import { useEditorStore } from "@/store/use-editor-store";
 
@@ -78,7 +80,7 @@ export const Navbar = () => {
     onDownload(blob, `document.html`); // TODO: Use document name
   };
 
-  const onSaveText   = () => {
+  const onSaveText = () => {
     if (!editor) return;
 
     const content = editor.getText();
@@ -87,8 +89,6 @@ export const Navbar = () => {
     });
     onDownload(blob, `document.txt`); // TODO: Use document name
   };
-
-
 
   return (
     <nav className="flex items-center justify-between">
@@ -261,6 +261,15 @@ export const Navbar = () => {
             </Menubar>
           </div>
         </div>
+      </div>
+      <div className="flex gap-3 items-center pl-6">
+        <OrganizationSwitcher
+          afterCreateOrganizationUrl="/"
+          afterLeaveOrganizationUrl="/"
+          afterSelectOrganizationUrl="/"
+          afterSelectPersonalUrl="/"
+        />
+        <UserButton />
       </div>
     </nav>
   );
